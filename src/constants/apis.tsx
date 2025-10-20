@@ -1,0 +1,1 @@
+export const YOUR_API_URL = "https://www.thecocktaildb.com/api/json/v1/1/";
