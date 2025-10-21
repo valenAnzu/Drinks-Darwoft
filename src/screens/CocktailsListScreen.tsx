@@ -25,9 +25,6 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
         getAllCocktails();
     }, [])
 
-
-    
-
     if (isLoading) {
         return (
             <View style={homeStyles.loadingStyle}>
@@ -42,7 +39,9 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
             onPress={() => navigation.navigate('CocktailDetail', { cocktailId: item.idDrink })}
         >
             <Image source={{ uri: item.strDrinkThumb }} style={styles.image} />
-            <Text style={homeStyles.textName}>{item.strDrink}</Text>
+            <View style={styles.overlay}>
+                <Text style={styles.imageText}>{item.strDrink}</Text>
+            </View>
         </Pressable>
     )
 
@@ -72,23 +71,32 @@ const CARD_WIDTH = (screenWidth / 2) - CARD_MARGIN * 3;
 const styles = StyleSheet.create({
     card: {
         width: CARD_WIDTH,
-        backgroundColor: '#a1ecff',
-        padding: 10,
         borderRadius: 10,
         marginBottom: 10,
         marginHorizontal: 10,
+        overflow: 'hidden',
+        backgroundColor: '#003e47',
+        elevation: 0,
+        shadowOpacity: 0,
     },
     image: {
         width: '100%',
-        height: 100,
-        borderRadius: 10,
-        marginBottom: 8,
+        aspectRatio: 1,
+        resizeMode: 'cover',
+        backgroundColor: '#003e47'
     },
-    cardFooter: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+    overlay: {
+        position: 'absolute',
+        bottom: 0,
         width: '100%',
-        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.4)', // semitransparente para destacar el texto
+        paddingVertical: 5,
+        paddingHorizontal: 8,
+    },
+    imageText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 });
 

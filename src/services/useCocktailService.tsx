@@ -37,9 +37,34 @@ const useCocktailService = () => {
     } finally {
         setIsLoading(false);
     }
-    };
+  };
 
-  return { getCocktails, isLoading, errorMessage };
+  const getOneCocktail = async (idDrink: string) => {
+    setIsLoading(true);
+    setErrorMessage('');
+
+    try {
+      const response = await axios.get(`${YOUR_API_URL}lookup.php`, {
+        params: {
+          i: idDrink,
+        }
+      });
+      if (!response.data.drinks || response.data.drinks.length === 0) {
+        return null; // no se encontro el trago
+      }
+
+    return response.data.drinks[0] as Cocktail; // objeto con url, breeds[], etc.
+    } catch (error) {
+      console.error('Error fetching dogs:', error);
+      setErrorMessage('Ocurrió un error inesperado.');
+      throw error;
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+
+  return { getCocktails, getOneCocktail, isLoading, errorMessage };
 }
 
 export default useCocktailService;

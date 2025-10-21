@@ -2,7 +2,8 @@ import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-na
 import { CompositeNavigationProp, NavigationProp, useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import CocktailsListScreen from './CocktailsListScreen'
+import CocktailsListScreen from './CocktailsListScreen';
+import CocktailDetailScreen from './CocktailDetailScreen';
 
 
 export type HomeStackParams = {
@@ -18,8 +19,6 @@ export type HomeStackNavigationProp = CompositeNavigationProp<
 const Stack = createNativeStackNavigator<HomeStackParams>();
 
 export const HomeStack = () => {
-  const navigation = useNavigation<HomeStackNavigationProp>();  // TODO: Remover elementos que no se usan
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'gray' }}>
       <Stack.Navigator
@@ -27,16 +26,18 @@ export const HomeStack = () => {
         screenOptions={{
           headerShown: true,
           headerStyle: {
-            backgroundColor: '#86f6ff',
+            backgroundColor: '#00333b',
           },
           headerTitleStyle: {
-            color: 'black',
+            color: 'white',
+            fontSize: 24,
           },
           headerTitleAlign: 'center',
           animation: 'slide_from_right',
         }}
       >
         <Stack.Screen name="CocktailsList" component={CocktailsListScreen} options={{ title: 'Cocktails List' }} />
+        <Stack.Screen name="CocktailDetail" component={CocktailDetailScreen} options={{ title: 'Cocktail Detail' }} />
        
       </Stack.Navigator>
     </SafeAreaView>
