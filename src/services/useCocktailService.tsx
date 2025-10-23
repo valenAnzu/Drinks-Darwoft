@@ -64,7 +64,33 @@ const useCocktailService = () => {
     }
   }
 
-  return { getCocktails, getOneCocktail, isLoading, errorMessage };
+  const getIngredients = async () => {
+    setIsLoading(true);
+    setErrorMessage('');
+
+    try {
+        let allIngredients: Cocktail[] = [];
+
+        for (let i = 97; i <= 122; i++) { // 97 = 'a', 122 = 'z'
+        const letter = String.fromCharCode(i);
+        const response = await axios.get(`${YOUR_API_URL}filter.php?i=${letter}`);
+        if (response.data.drinks) {
+            allIngredients = allIngredients.concat(response.data.drinks);
+        }
+        }
+
+        console.log('Todos los ingredientes:', allIngredients);
+        return allIngredients;
+    } catch (error) {
+        console.error('Error fetching inngredientes:', error);
+        setErrorMessage('Ocurrió un error inesperado.');
+        throw error;
+    } finally {
+        setIsLoading(false);
+    }
+  };
+
+  return { getCocktails, getOneCocktail, getIngredients, isLoading, errorMessage };
 }
 
 export default useCocktailService;
