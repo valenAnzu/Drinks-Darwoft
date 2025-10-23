@@ -1,10 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeStack } from './homeStack';
+import { IngredientsStack } from './ingredientsStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from '../Ionicons';
 
-import IngredientsScreen from './IngredientsScreen';
 import FavoritesScreen from './FavoritesScreen';
 
 export type BottomTabParams = {
@@ -55,7 +55,7 @@ const HomeTab = () => {
             />
             <Tab.Screen
                 name="Ingredients"
-                component={IngredientsScreen}
+                component={IngredientsStack}
                 options={{ title: 'Ingredients' }}
             />
             <Tab.Screen

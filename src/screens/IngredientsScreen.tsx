@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, ActivityIndicator, StyleSheet, FlatList, Pressable, Dimensions } from 'react-native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
+import { CompositeNavigationProp } from '@react-navigation/native';
 
 import { HomeStackParams } from "./homeStack";
+import { BottomTabParams } from "./homeTab";
 import useIngredientService, { Ingredient } from "../services/useIngredientService";
 import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
@@ -11,8 +13,13 @@ import { useNavigation } from "@react-navigation/native";
 
 const screenWidth = Dimensions.get('window').width;
 
+type IngredientsScreenNavigationProp = CompositeNavigationProp<
+  NativeStackNavigationProp<HomeStackParams>,
+  NativeStackNavigationProp<BottomTabParams>
+>;
+
 const IngredientsScreen: React.FC = () => {
-    const navigation = useNavigation<NativeStackNavigationProp<HomeStackParams>>();
+    const navigation = useNavigation<IngredientsScreenNavigationProp>();
     const { getIngredients, isLoading } = useIngredientService();
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
@@ -33,12 +40,18 @@ const IngredientsScreen: React.FC = () => {
         );
     }
 
+    const getIngredientImageUrl = (ingredientName: string) =>
+        `https://www.thecocktaildb.com/images/ingredients/${encodeURIComponent(ingredientName)}-Medium.png`;
+
     const renderItem = ({ item, index }: { item: Ingredient; index: number }) => (
         
         <Pressable
             style={styles.card}
             onPress={() => navigation.navigate('CocktailsByIngredient', { ingredientName: item.strIngredient1 })}
         >
+            <Image 
+                source={{ uri: getIngredientImageUrl(item.strIngredient1) }}
+                style={styles.image} />
             <Text style={styles.imageText}>{item.strIngredient1}</Text>
         </Pressable>
       
@@ -56,7 +69,7 @@ const IngredientsScreen: React.FC = () => {
                 renderItem={renderItem}
                 ListEmptyComponent={() => (
                     <Text style={{ textAlign: "center", marginTop: 20 }}>
-                        No se encontraron razas que coincidan.
+                        No se encontraron ingredientes que coincidan.
                     </Text>
                 )}
             />
@@ -77,6 +90,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#003e47',
         elevation: 0,
         shadowOpacity: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     image: {
         width: '100%',
