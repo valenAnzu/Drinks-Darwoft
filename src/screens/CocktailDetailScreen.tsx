@@ -6,6 +6,7 @@ import { HomeStackParams } from "./homeStack";
 import useCocktailService from "../services/useCocktailService";
 import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
+import Divider from "../components/Divider";
 
 interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailDetail'> { }
 
@@ -50,7 +51,7 @@ const CocktailDetailScreen: React.FC<Props> = ({ navigation, route }) => {
     
 
     return (
-        <ScrollView contentContainerStyle={{ padding: 20, backgroundColor: '#003e47' }}>
+        <ScrollView style={homeStyles.screenContent}>
             {cocktailInfo.strDrinkThumb && (
                 <Image
                     source={{ uri: cocktailInfo.strDrinkThumb }}
@@ -58,37 +59,49 @@ const CocktailDetailScreen: React.FC<Props> = ({ navigation, route }) => {
                     resizeMode="cover"
                 />
             )}
+            <View style={{padding:20}}>
+                <Text style={homeStyles.textName}>{cocktailInfo.strDrink}</Text>
 
-            <Text style={homeStyles.textName}>{cocktailInfo.strDrink}</Text>
+                <Text style={homeStyles.subtitle}>
+                    Category: <Text style={homeStyles.textInfo}>{cocktailInfo.strCategory}</Text>
+                </Text>
+                <Divider />
 
-            <Text style={homeStyles.subtitle}>
-                Category: <Text style={homeStyles.textInfo}>{cocktailInfo.strCategory}</Text>
-            </Text>
+                <Text style={homeStyles.subtitle}>
+                    Glass: <Text style={homeStyles.textInfo}>{cocktailInfo.strGlass}</Text>
+                </Text>
+                <Divider />
 
-            <Text style={homeStyles.subtitle}>
-                Glass: <Text style={homeStyles.textInfo}>{cocktailInfo.strGlass}</Text>
-            </Text>
+                <Text style={homeStyles.subtitle}>
+                    Instructions: <Text style={homeStyles.textInfo}>{cocktailInfo.strInstructions}</Text>
+                </Text>
+                <Divider />
 
-            <Text style={homeStyles.subtitle}>
-                Instructions: <Text style={homeStyles.textInfo}>{cocktailInfo.strInstructions}</Text>
-            </Text>
+                <Text style={homeStyles.subtitle}>Ingredients:</Text>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{marginVertical: 10}}>
+                        {Array.from({ length: 15 }, (_, i) => i + 1).map(num => {
+                            const ingredientKey = `strIngredient${num}` as keyof Cocktail;
+                            const measureKey = `strMeasure${num}` as keyof Cocktail;
 
-            <Text style={homeStyles.subtitle}>Ingredients:</Text>
-            {Array.from({ length: 15 }, (_, i) => i + 1).map(num => {
-                const ingredientKey = `strIngredient${num}` as keyof Cocktail;
-                const measureKey = `strMeasure${num}` as keyof Cocktail;
+                            const ingredient = cocktailInfo[ingredientKey];
+                            const measure = cocktailInfo[measureKey];
 
-                const ingredient = cocktailInfo[ingredientKey];
-                const measure = cocktailInfo[measureKey];
+                            if (!ingredient) return null;
 
-                if (!ingredient) return null;
-
-                return (
-                    <Text key={num} style={homeStyles.textInfo}>
-                        {measure ? `${measure} ` : ''}{ingredient}
-                    </Text>
-                );
-            })}
+                            return (
+                                <View key={num} style={styles.ingredientCard}>
+                                    <Image
+                                        //no puedo reducir el uri porque la API los nombra con indices, y no hay un array listo.
+                                        source={{ uri: `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Medium.png`}}
+                                        style={styles.ingredientImage}
+                                    />
+                                    <Text style={styles.ingredientText}>{ingredient}</Text>
+                                        {measure && <Text style={styles.measureText}>{measure}</Text>}
+                                </View>
+                            );
+                        })}
+                    </ScrollView>
+            </View>
         </ScrollView>
     );
 };
@@ -97,9 +110,32 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 300,
+        resizeMode: 'cover',
+    },
+    ingredientCard: {
+        alignItems: 'center',
+        marginRight: 12,
+        backgroundColor: 'transparent',
         borderRadius: 12,
-        marginBottom: 20,
-        backgroundColor: '#f2f2f2',
+        padding: 10,
+        width: 100,
+    },
+    ingredientImage: {
+        width: 100,
+        height: 100,
+        borderRadius: 30,
+        marginBottom: 6,
+    },
+    ingredientText: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: 'white',
+    },
+    measureText: {
+        fontSize: 12,
+        color: '#d3d3d3',
+        textAlign: 'center',
     },
 });
 

@@ -10,19 +10,19 @@ export const homeStyles = StyleSheet.create({
       fontWeight: 'bold',
       fontSize: 24,
       marginBottom: 8,
-      color: '#717171'
+      color: 'white'
     },
     subtitle: {
       textAlign: 'left',
       fontSize: 16,
       fontWeight: 'bold',
-      color: 'black',
+      color: 'white',
     },
     textInfo: {
       textAlign: 'left',
       fontSize: 16,
       fontWeight: 'normal',
-      color: '#555',
+      color: '#d3d3d3',
     },
     loadingStyle: {
       flex: 1,
