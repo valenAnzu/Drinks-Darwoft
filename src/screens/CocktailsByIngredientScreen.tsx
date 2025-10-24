@@ -7,8 +7,9 @@ import useCocktailService from "../services/useCocktailService";
 import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
 import Divider from "../components/Divider";
+import { IngredientsStackParams } from "./ingredientsStack";
 
-interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailsByIngredient'> { }
+interface Props extends NativeStackScreenProps<IngredientsStackParams, 'CocktailsByIngredient'> { }
 
 const CocktailsByIngredientScreen: React.FC<Props> = ({ navigation, route }) => {
 

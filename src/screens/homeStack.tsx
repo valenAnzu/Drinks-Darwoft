@@ -4,13 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import CocktailsListScreen from './CocktailsListScreen';
 import CocktailDetailScreen from './CocktailDetailScreen';
-import CocktailsByIngredientScreen from './CocktailsByIngredientScreen';
 
 
 export type HomeStackParams = {
   CocktailsList: undefined,
   CocktailDetail: { cocktailId: string },
-  CocktailsByIngredient: { ingredientName: string };
 }
 
 export type HomeStackNavigationProp = CompositeNavigationProp<
@@ -40,8 +38,7 @@ export const HomeStack = () => {
       >
         <Stack.Screen name="CocktailsList" component={CocktailsListScreen} options={{ title: 'Cocktails List' }} />
         <Stack.Screen name="CocktailDetail" component={CocktailDetailScreen} options={{ title: 'Cocktail Detail' }} />
-        <Stack.Screen name="CocktailsByIngredient" component={CocktailsByIngredientScreen} options={{ title: 'Cocktail By Ingredient' }} />
-       
+
       </Stack.Navigator>
     </SafeAreaView>
   );
