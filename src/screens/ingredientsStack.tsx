@@ -9,6 +9,7 @@ export type IngredientsStackParams = {
   CocktailsByIngredient: { ingredientName: string };
 }
 
+
 const Stack = createNativeStackNavigator<IngredientsStackParams>();
 
 export const IngredientsStack = () => {

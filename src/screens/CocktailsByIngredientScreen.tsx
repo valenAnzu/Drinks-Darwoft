@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-import { HomeStackParams } from "./homeStack";
 import useCocktailService from "../services/useCocktailService";
 import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";

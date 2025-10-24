@@ -5,7 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CocktailsListScreen from './CocktailsListScreen';
 import CocktailDetailScreen from './CocktailDetailScreen';
 
-
 export type HomeStackParams = {
   CocktailsList: undefined,
   CocktailDetail: { cocktailId: string },
