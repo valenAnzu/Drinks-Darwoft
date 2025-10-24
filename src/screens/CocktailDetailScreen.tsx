@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, Image, ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { HomeStackParams } from "./homeStack";
@@ -7,6 +7,7 @@ import useCocktailService from "../services/useCocktailService";
 import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
 import Divider from "../components/Divider";
+import { YOUR_API_INGREDIENT_IMAGE } from "../constants/apis";
 
 interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailDetail'> { }
 
@@ -49,7 +50,6 @@ const CocktailDetailScreen: React.FC<Props> = ({ navigation, route }) => {
         );
     }
     
-
     return (
         <ScrollView style={homeStyles.screenContent}>
             {cocktailInfo.strDrinkThumb && (
@@ -89,15 +89,15 @@ const CocktailDetailScreen: React.FC<Props> = ({ navigation, route }) => {
                             if (!ingredient) return null;
 
                             return (
-                                <View key={num} style={styles.ingredientCard}>
+                                <TouchableOpacity key={num} style={styles.ingredientCard} onPress={() => navigation.getParent()?.navigate('Ingredients', { screen: 'CocktailsByIngredient', params: { ingredientName: ingredient } })}>
                                     <Image
                                         //no puedo reducir el uri porque la API los nombra con indices, y no hay un array listo.
-                                        source={{ uri: `https://www.thecocktaildb.com/images/ingredients/${ingredient}-Medium.png`}}
+                                        source={{ uri: `${YOUR_API_INGREDIENT_IMAGE}${ingredient}-Medium.png`}}
                                         style={styles.ingredientImage}
                                     />
                                     <Text style={styles.ingredientText}>{ingredient}</Text>
                                         {measure && <Text style={styles.measureText}>{measure}</Text>}
-                                </View>
+                                </TouchableOpacity>
                             );
                         })}
                     </ScrollView>
@@ -114,11 +114,14 @@ const styles = StyleSheet.create({
     },
     ingredientCard: {
         alignItems: 'center',
-        marginRight: 12,
-        backgroundColor: 'transparent',
+        justifyContent: 'center',
+        marginHorizontal: 15,
+        borderWidth: 1,
+        borderColor: '#ffffff',
         borderRadius: 12,
         padding: 10,
-        width: 100,
+        width: 130,
+        height: 200,
     },
     ingredientImage: {
         width: 100,

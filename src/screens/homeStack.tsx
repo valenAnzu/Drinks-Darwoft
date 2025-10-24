@@ -1,6 +1,5 @@
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CompositeNavigationProp, NavigationProp } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import CocktailsListScreen from './CocktailsListScreen';
 import CocktailDetailScreen from './CocktailDetailScreen';
@@ -19,7 +18,6 @@ const Stack = createNativeStackNavigator<HomeStackParams>();
 
 export const HomeStack = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'gray' }}>
       <Stack.Navigator
         initialRouteName={'CocktailsList'}
         screenOptions={{
@@ -39,6 +37,5 @@ export const HomeStack = () => {
         <Stack.Screen name="CocktailDetail" component={CocktailDetailScreen} options={{ title: 'Cocktail Detail' }} />
 
       </Stack.Navigator>
-    </SafeAreaView>
   );
 }

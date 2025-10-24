@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, NavigatorScreenParams } from '@react-navigation/native';
-import { HomeStack, HomeStackParams } from './homeStack';
+import { HomeStackParams } from './homeStack';
 import  HomeTab from './homeTab';
 
 
@@ -25,7 +25,6 @@ export const RootStack = () => {
         initialRouteName={'HomeTab'}
         screenOptions={{
           headerShown: false,
-        //   contentStyle: { backgroundColor: 'red' },  // TODO: Remover codigo comentado
         }}
       >
         <Stack.Screen name="HomeTab" component={HomeTab} />
