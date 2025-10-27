@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { NativeStackScreenProps, NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { CompositeNavigationProp } from '@react-navigation/native';
 
 import { HomeStackParams } from "./homeStack";
+import { BottomTabParams } from "./homeTab";
 import useCocktailService from "../services/useCocktailService";
 import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
 import Divider from "../components/Divider";
 import { YOUR_API_INGREDIENT_IMAGE } from "../constants/apis";
 
-interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailDetail'> { }
+interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailDetail'> {
+    navigation: CompositeNavigationProp<
+        NativeStackNavigationProp<HomeStackParams, 'CocktailDetail'>,
+        NativeStackNavigationProp<BottomTabParams>
+    >;
+}
 
 const CocktailDetailScreen: React.FC<Props> = ({ navigation, route }) => {
     const { cocktailId } = route.params;
@@ -50,6 +57,17 @@ const CocktailDetailScreen: React.FC<Props> = ({ navigation, route }) => {
         );
     }
     
+    const handleIngredientPress = (ingredientName: string) => {
+        navigation.getParent<NativeStackNavigationProp<BottomTabParams>>()?.navigate('Ingredients', {
+            screen: 'IngredientDetail',
+            params: {
+                ingredientName,
+                fromScreen: 'CocktailDetail',
+                cocktailId: cocktailInfo.idDrink,
+            },
+        });
+    };
+
     return (
         <ScrollView style={homeStyles.screenContent}>
             {cocktailInfo.strDrinkThumb && (
@@ -88,8 +106,8 @@ const CocktailDetailScreen: React.FC<Props> = ({ navigation, route }) => {
 
                             if (!ingredient) return null;
 
-                            return (
-                                <TouchableOpacity key={num} style={styles.ingredientCard} onPress={() => navigation.getParent()?.navigate('Ingredients', { screen: 'CocktailsByIngredient', params: { ingredientName: ingredient } })}>
+                                return (
+                                <TouchableOpacity key={num} style={styles.ingredientCard} onPress={() => handleIngredientPress(ingredient)}>
                                     <Image
                                         //no puedo reducir el uri porque la API los nombra con indices, y no hay un array listo.
                                         source={{ uri: `${YOUR_API_INGREDIENT_IMAGE}${ingredient}-Medium.png`}}

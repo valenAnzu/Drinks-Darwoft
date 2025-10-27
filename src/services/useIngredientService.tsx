@@ -16,6 +16,9 @@ const useIngredientService = () => {
     setErrorMessage('');
     try {
       const response = await axios.get(`${YOUR_API_URL}list.php?i=list`);
+      response.data.drinks.forEach((drink: Ingredient, index: number) => {
+        console.log(`Drink #${index}:`, drink);
+      });
       return response.data.drinks as Ingredient[];
     } catch (error) {
       console.error('Error fetching ingredients:', error);
@@ -26,7 +29,25 @@ const useIngredientService = () => {
     }
   };
 
-  return { getIngredients, isLoading, errorMessage };
+  const getOneIngredient = async (strIngredient1: string): Promise<Ingredient> => {
+    setIsLoading(true);
+    setErrorMessage('');
+
+    try {
+      // The API doesn't have a direct endpoint to get ingredient details
+      // We'll return the ingredient name as the ingredient info
+      return { strIngredient1 } as Ingredient;
+    } catch (error) {
+      console.error('Error fetching ingredient:', error);
+      setErrorMessage('Ocurrió un error inesperado.');
+      throw error;
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { getIngredients, getOneIngredient, isLoading, errorMessage };
 };
 
 export default useIngredientService;

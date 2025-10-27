@@ -2,14 +2,15 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { HomeStack } from './homeStack';
-import { IngredientsStack } from './ingredientsStack';
+import { HomeStack, HomeStackParams } from './homeStack';
+import { IngredientsStack, IngredientsStackParams } from './ingredientsStack';
 import Ionicons from '../Ionicons';
 import FavoritesScreen from './FavoritesScreen';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
 export type BottomTabParams = {
-    Cocktails: undefined,
-    Ingredients: undefined,
+    Cocktails: NavigatorScreenParams<HomeStackParams>,
+    Ingredients: NavigatorScreenParams<IngredientsStackParams>,
     Favorites: undefined,
 }
 

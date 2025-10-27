@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, ActivityIndicator, StyleSheet, FlatList, Pressable, Dimensions } from 'react-native';
-import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
-import { CompositeNavigationProp } from '@react-navigation/native';
-
-import { HomeStackParams } from "./homeStack";
-import { BottomTabParams } from "./homeTab";
-import useIngredientService, { Ingredient } from "../services/useIngredientService";
-import { Cocktail } from "../services/Cocktail";
-import { homeStyles } from "./homeStyles";
-import Divider from "../components/Divider";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
+
+import { IngredientsStackParams } from "./ingredientsStack";
+import useIngredientService, { Ingredient } from "../services/useIngredientService";
+import { homeStyles } from "./homeStyles";
 
 const screenWidth = Dimensions.get('window').width;
 
-type IngredientsScreenNavigationProp = CompositeNavigationProp<
-  NativeStackNavigationProp<HomeStackParams>,
-  NativeStackNavigationProp<BottomTabParams>
->;
+type IngredientsScreenNavigationProp = NativeStackNavigationProp<IngredientsStackParams>;
 
 const IngredientsScreen: React.FC = () => {
     const navigation = useNavigation<IngredientsScreenNavigationProp>();
@@ -40,21 +33,30 @@ const IngredientsScreen: React.FC = () => {
         );
     }
 
-    const getIngredientImageUrl = (ingredientName: string) =>
-        `https://www.thecocktaildb.com/images/ingredients/${encodeURIComponent(ingredientName)}-Medium.png`;
+    const IngredientSize = {
+        Small: 'Small',
+        Medium: 'Medium',
+        Large: 'Large',
+    } as const;
+
+    type IngredientImageSize = typeof IngredientSize[keyof typeof IngredientSize];
+
+
+    const getIngredientImageUrl = (ingredientName: string, size: IngredientImageSize = IngredientSize.Medium) =>
+        `https://www.thecocktaildb.com/images/ingredients/${encodeURIComponent(ingredientName)}-${size}.png`;
 
     const renderItem = ({ item, index }: { item: Ingredient; index: number }) => (
-        
         <Pressable
             style={styles.card}
-            onPress={() => navigation.navigate('CocktailsByIngredient', { ingredientName: item.strIngredient1 })}
+            onPress={() => navigation.navigate("IngredientDetail", {
+                ingredientName: item.strIngredient1,
+            })}
         >
             <Image 
                 source={{ uri: getIngredientImageUrl(item.strIngredient1) }}
                 style={styles.image} />
             <Text style={styles.imageText}>{item.strIngredient1}</Text>
         </Pressable>
-      
     )
 
     return (

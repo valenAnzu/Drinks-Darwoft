@@ -5,9 +5,9 @@
  * @format
  */
 
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { enableScreens } from 'react-native-screens';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import {
   SafeAreaProvider,
 } from 'react-native-safe-area-context';

@@ -1,11 +1,16 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import IngredientsScreen from './IngredientsScreen';
-import CocktailsByIngredientScreen from './CocktailsByIngredientScreen';
+import IngredientDetailScreen from './IngredientDetailScreen';
+import { Pressable, Text } from 'react-native';
 
 export type IngredientsStackParams = {
-  Ingredients: undefined;
-  CocktailsByIngredient: { ingredientName: string };
+  IngredientsList: undefined;
+  IngredientDetail: {
+    ingredientName: string,
+    fromScreen?: 'CocktailDetail' | 'IngredientList',
+    cocktailId?: string,
+  };
 }
 
 
@@ -14,7 +19,7 @@ const Stack = createNativeStackNavigator<IngredientsStackParams>();
 export const IngredientsStack = () => {
   return (
       <Stack.Navigator
-        initialRouteName={'Ingredients'}
+        initialRouteName={'IngredientsList'}
         screenOptions={{
           headerShown: true,
           headerStyle: {
@@ -26,10 +31,19 @@ export const IngredientsStack = () => {
           },
           headerTitleAlign: 'center',
           animation: 'slide_from_right',
+          headerBackTitle: 'Back',
         }}
       >
-        <Stack.Screen name="Ingredients" component={IngredientsScreen} options={{ title: 'Ingredients' }} />
-        <Stack.Screen name="CocktailsByIngredient" component={CocktailsByIngredientScreen} options={{ title: 'Cocktail By Ingredient' }} />
+        <Stack.Screen
+          name="IngredientsList"
+          component={IngredientsScreen}
+          options={{ title: 'Ingredients' }}
+        />
+        <Stack.Screen 
+          name="IngredientDetail" 
+          component={IngredientDetailScreen} 
+          options={() => ({ title: 'Ingredient Detail' })} 
+        />
 
       </Stack.Navigator>
   );
