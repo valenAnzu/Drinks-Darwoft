@@ -57,7 +57,7 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
                 renderItem={renderItem}
                 ListEmptyComponent={() => (
                     <Text style={{ textAlign: "center", marginTop: 20 }}>
-                        No se encontraron razas que coincidan.
+                        No se encontraron tragos que coincidan.
                     </Text>
                 )}
             />
