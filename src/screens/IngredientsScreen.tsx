@@ -17,7 +17,7 @@ const IngredientsScreen: React.FC = () => {
     const { getIngredients, isLoading } = useIngredientService();
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
     const [ currentPage, setCurrentPage ] = useState(1);
-    const [ itemsPerPage ] = useState(20);
+    const [ itemsPerPage ] = useState(10);
 
     const getAllIngredients = async () => {
         const fetchedIngredients = await getIngredients();
@@ -38,7 +38,7 @@ const IngredientsScreen: React.FC = () => {
 
     const totalPages = Math.ceil(ingredients.length / itemsPerPage);
 
-    const paginatedCocktails = ingredients.slice(
+    const paginatedIngredients = ingredients.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
@@ -79,7 +79,7 @@ const IngredientsScreen: React.FC = () => {
         <View style={homeStyles.screenContent}>
             <FlatList
                 numColumns={2}
-                data={ingredients}
+                data={paginatedIngredients}
                 keyExtractor={(item, index) => item.strIngredient1 + index}
                 ItemSeparatorComponent={() => (
                     <View style={{ height: 10 }} /> // separador vertical de 10px
