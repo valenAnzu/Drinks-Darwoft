@@ -6,6 +6,7 @@ import { HomeStackParams } from "./homeStack";
 import useCocktailService from "../services/useCocktailService";
 import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
+import Pagination from "../components/Pagination";
 //import HeaderFilter from "../components/HeaderFilter";
 
 interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailsList'>{ };
@@ -15,6 +16,8 @@ const screenWidth = Dimensions.get('window').width;
 const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
     const { getCocktails, isLoading } = useCocktailService();
     const [cocktails, setCocktails] = useState<Cocktail[]>([]);
+    const [ currentPage, setCurrentPage ] = useState(1);
+    const [ itemsPerPage ] = useState(20);
 
     const getAllCocktails = async () => {
         const fetchedCocktails = await getCocktails();
@@ -33,6 +36,19 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
         );
     }
 
+    const totalPages = Math.ceil(cocktails.length / itemsPerPage);
+
+    const paginatedCocktails = cocktails.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const handlePageChange = (page: number) => {
+        if (page >= 1 && page <= totalPages) {
+        setCurrentPage(page);
+        }
+    };
+
     const renderItem = ({ item }: { item: Cocktail }) => (
         <Pressable
             style={styles.card}
@@ -49,7 +65,7 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
         <View style={homeStyles.screenContent}>
             <FlatList
                 numColumns={2}
-                data={cocktails}
+                data={paginatedCocktails}
                 keyExtractor={(item) => item.idDrink}
                 ItemSeparatorComponent={() => (
                     <View style={{ height: 10 }} /> // separador vertical de 10px
@@ -61,7 +77,13 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
                     </Text>
                 )}
             />
-        </View>
+            {/* Paginación */}
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
+        </View>                     
     )
 }
 

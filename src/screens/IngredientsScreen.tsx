@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { IngredientsStackParams } from "./ingredientsStack";
 import useIngredientService, { Ingredient } from "../services/useIngredientService";
 import { homeStyles } from "./homeStyles";
+import Pagination from "../components/Pagination";
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -15,6 +16,8 @@ const IngredientsScreen: React.FC = () => {
     const navigation = useNavigation<IngredientsScreenNavigationProp>();
     const { getIngredients, isLoading } = useIngredientService();
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+    const [ currentPage, setCurrentPage ] = useState(1);
+    const [ itemsPerPage ] = useState(20);
 
     const getAllIngredients = async () => {
         const fetchedIngredients = await getIngredients();
@@ -32,6 +35,19 @@ const IngredientsScreen: React.FC = () => {
             </View>
         );
     }
+
+    const totalPages = Math.ceil(ingredients.length / itemsPerPage);
+
+    const paginatedCocktails = ingredients.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const handlePageChange = (page: number) => {
+        if (page >= 1 && page <= totalPages) {
+        setCurrentPage(page);
+        }
+    };
 
     const IngredientSize = {
         Small: 'Small',
@@ -74,6 +90,12 @@ const IngredientsScreen: React.FC = () => {
                         No se encontraron ingredientes que coincidan.
                     </Text>
                 )}
+            />
+            {/* Paginación */}
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
             />
         </View>
     )

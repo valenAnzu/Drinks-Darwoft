@@ -30,5 +30,4 @@ export const homeStyles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
-
 });
