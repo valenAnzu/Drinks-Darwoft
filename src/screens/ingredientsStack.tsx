@@ -1,8 +1,10 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator,  NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import IngredientsScreen from './IngredientsScreen';
 import IngredientDetailScreen from './IngredientDetailScreen';
-import { Pressable, Text } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
+import Ionicons from '../utils/Ionicons';
+import { HeaderTitle } from '@react-navigation/elements';
 
 export type IngredientsStackParams = {
   IngredientsList: undefined;
@@ -11,6 +13,36 @@ export type IngredientsStackParams = {
     fromScreen?: 'CocktailDetail' | 'IngredientList',
     cocktailId?: string,
   };
+}
+
+
+const optionsScreen = (
+  screenProps: NativeStackScreenProps<IngredientsStackParams, keyof IngredientsStackParams>,
+  titleScreen: string,
+  headerRightDestinationTitle?: string
+) => {
+  const destination = headerRightDestinationTitle ? headerRightDestinationTitle : 'IngredientsList';
+  let options: any = {
+    headerTintColor: 'orange',
+    headerTitleStyle: { color: 'orange' },
+    title: titleScreen,
+    headerLeft: () => (
+      <Pressable onPress={() => screenProps.navigation.goBack()}>
+        <Ionicons name="arrow-back" size={24} color="orange" />
+      </Pressable>
+    ),
+  };
+  if (headerRightDestinationTitle) {
+    options = {
+      ...options,
+      headerRight: () => (
+        <Pressable onPress={() => screenProps.navigation.navigate(destination as any)}>
+          <Ionicons name="menu" size={24} color="orange" />
+        </Pressable>
+      ),
+    };
+  }
+  return options;
 }
 
 
@@ -42,7 +74,12 @@ export const IngredientsStack = () => {
         <Stack.Screen 
           name="IngredientDetail" 
           component={IngredientDetailScreen} 
-          options={() => ({ title: 'Ingredient Detail' })} 
+          options={(props) => optionsScreen(
+            props,
+            'Ingredient Detail',
+            'IngredientsList')
+          }
+
         />
 
       </Stack.Navigator>

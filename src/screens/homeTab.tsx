@@ -4,9 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { HomeStack, HomeStackParams } from './homeStack';
 import { IngredientsStack, IngredientsStackParams } from './ingredientsStack';
-import Ionicons from '../Ionicons';
 import FavoritesScreen from './FavoritesScreen';
 import { NavigatorScreenParams } from '@react-navigation/native';
+import Ionicons from '../utils/Ionicons';
 
 export type BottomTabParams = {
     Cocktails: NavigatorScreenParams<HomeStackParams>,
