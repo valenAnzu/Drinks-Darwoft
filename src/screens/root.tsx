@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, NavigatorScreenParams } from '@react-navigation/native';
 import { HomeStackParams } from './homeStack';
 import  HomeTab from './homeTab';
+import { FavoritesProvider } from '../contexts/FavoritesContext';
 
 
 // Define el tipo para los parámetros del stack raíz de forma más específica
@@ -19,16 +20,18 @@ const Stack = createNativeStackNavigator<RootStackParams>();
 export const RootStack = () => {
  
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        id={undefined} // Necesario para cumplir con la definición de tipos en React Navigation 7
-        initialRouteName={'HomeTab'}
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="HomeTab" component={HomeTab} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <FavoritesProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          id={undefined} // Necesario para cumplir con la definición de tipos en React Navigation 7
+          initialRouteName={'HomeTab'}
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="HomeTab" component={HomeTab} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </FavoritesProvider>
   );
 }

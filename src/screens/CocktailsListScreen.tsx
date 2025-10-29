@@ -4,9 +4,11 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { HomeStackParams } from "./homeStack";
 import useCocktailService from "../services/useCocktailService";
+import { useFavorites } from "../contexts/FavoritesContext";
 import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
 import Pagination from "../components/Pagination";
+import Ionicons from "../utils/Ionicons";
 //import HeaderFilter from "../components/HeaderFilter";
 
 interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailsList'>{ };
@@ -15,6 +17,7 @@ const screenWidth = Dimensions.get('window').width;
 
 const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
     const { getCocktails, isLoading } = useCocktailService();
+    const { toggleFavorite, isFavorite } = useFavorites();
     const [cocktails, setCocktails] = useState<Cocktail[]>([]);
     const [ currentPage, setCurrentPage ] = useState(1);
     const [ itemsPerPage ] = useState(20);
@@ -49,17 +52,44 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
         }
     };
 
-    const renderItem = ({ item }: { item: Cocktail }) => (
-        <Pressable
-            style={styles.card}
-            onPress={() => navigation.navigate('CocktailDetail', { cocktailId: item.idDrink })}
-        >
-            <Image source={{ uri: item.strDrinkThumb }} style={styles.image} />
-            <View style={styles.overlay}>
+    const renderItem = ({ item }: { item: Cocktail }) => {
+        const fav = isFavorite(item.idDrink);
+
+        return (
+            <View style={styles.cardContainer}>
+            <Pressable
+                style={styles.card}
+                onPress={() => navigation.navigate('CocktailDetail', { cocktailId: item.idDrink })}
+            >
+                <Image source={{ uri: item.strDrinkThumb }} style={styles.image} />
+                <View style={styles.overlay}>
                 <Text style={styles.imageText}>{item.strDrink}</Text>
+                </View>
+            </Pressable>
+
+            {/* Botón de favorito */}
+            <Pressable
+                style={styles.favoriteButton}
+                onPress={() => toggleFavorite(item)}
+                
+            >
+                <View style={{position: 'relative'}}>
+                    <Ionicons name="heart-outline" size={24} color="white" />
+
+                    {fav && (
+                        <Ionicons
+                            name="heart"
+                            size={24}
+                            color="white"
+                            style={{position: 'absolute', top: 0, left: 0}}
+                        />
+                    )}
+                </View>
+            </Pressable>
             </View>
-        </Pressable>
-    )
+        );
+    };
+
 
     return (
         <View style={homeStyles.screenContent}>
@@ -91,6 +121,9 @@ const CARD_MARGIN = 10;
 const CARD_WIDTH = (screenWidth / 2) - CARD_MARGIN * 3;
 
 const styles = StyleSheet.create({
+    cardContainer: {
+        position: "relative",
+    },
     card: {
         width: CARD_WIDTH,
         borderRadius: 10,
@@ -98,20 +131,17 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         overflow: 'hidden',
         backgroundColor: '#003e47',
-        elevation: 0,
-        shadowOpacity: 0,
     },
     image: {
         width: '100%',
         aspectRatio: 1,
         resizeMode: 'cover',
-        backgroundColor: '#003e47'
     },
     overlay: {
         position: 'absolute',
         bottom: 0,
         width: '100%',
-        backgroundColor: 'rgba(0,0,0,0.4)', // semitransparente para destacar el texto
+        backgroundColor: 'rgba(0,0,0,0.4)',
         paddingVertical: 5,
         paddingHorizontal: 8,
     },
@@ -119,6 +149,13 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 16,
+    },
+    favoriteButton: {
+        position: "absolute",
+        top: 8,
+        right: 15,
+        padding: 6,
+        borderRadius: 20,
     },
 });
 
