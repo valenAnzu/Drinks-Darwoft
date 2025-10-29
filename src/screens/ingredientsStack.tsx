@@ -15,7 +15,6 @@ export type IngredientsStackParams = {
   };
 }
 
-
 const optionsScreen = (
   screenProps: NativeStackScreenProps<IngredientsStackParams, keyof IngredientsStackParams>,
   titleScreen: string,

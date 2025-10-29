@@ -72,23 +72,6 @@ const IngredientDetailScreen: React.FC<Props> = ({ navigation, route }) => {
 
     return (
         <ScrollView style={homeStyles.screenContent}>
-            <Pressable
-                style={{ padding: 10, margin: 10, backgroundColor: '#ff7b00', borderRadius: 8 }}
-                onPress={() => {
-                    if (route.params.fromScreen === 'CocktailDetail' && route.params.cocktailId) {
-                        // Vuelve al detalle del cocktail
-                        navigation.getParent<NativeStackNavigationProp<BottomTabParams>>()?.navigate('Cocktails', {
-                            screen: 'CocktailDetail',
-                            params: { cocktailId: route.params.cocktailId }, // tenés que pasar el cocktailId desde el detalle de cocktail
-                        });
-                    } else {
-                        // Vuelve al listado de ingredientes
-                        navigation.goBack();
-                    }
-                }}
-            >
-                <Text style={{ color: 'white', fontWeight: 'bold' }}>Volver</Text>
-            </Pressable>
 
             <View style={styles.ingredientHeader}>
                 <Image 
