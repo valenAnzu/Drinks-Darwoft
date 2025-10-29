@@ -48,8 +48,17 @@ const IngredientDetailScreen: React.FC<Props> = ({ navigation, route }) => {
         );
     }
 
-    const getIngredientImageUrl = (ingredientName: string) =>
-        `https://www.thecocktaildb.com/images/ingredients/${encodeURIComponent(ingredientName)}-Medium.png`;
+    const IngredientSize = {
+        Small: 'Small',
+        Medium: 'Medium',
+        Large: 'Large',
+    } as const;
+
+    type IngredientImageSize = typeof IngredientSize[keyof typeof IngredientSize];
+
+
+    const getIngredientImageUrl = (ingredientName: string, size: IngredientImageSize = IngredientSize.Medium) =>
+        `https://www.thecocktaildb.com/images/ingredients/${encodeURIComponent(ingredientName)}-${size}.png`;
 
     const renderItem = ({ item }: { item: Cocktail }) => (
         <View style={styles.card}>
