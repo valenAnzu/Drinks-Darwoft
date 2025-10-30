@@ -10,6 +10,7 @@ import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
 import Divider from "../components/Divider";
 import { YOUR_API_INGREDIENT_IMAGE } from "../constants/apis";
+import { colors } from "../theme/colors";
 
 interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailDetail'> {
     navigation: CompositeNavigationProp<
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginHorizontal: 15,
         borderWidth: 1,
-        borderColor: '#ffffff',
+        borderColor: colors.borderPrimary,
         borderRadius: 12,
         padding: 10,
         width: 130,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     },
     measureText: {
         fontSize: 12,
-        color: '#d3d3d3',
+        color: colors.txtInfo,
         textAlign: 'center',
     },
 });

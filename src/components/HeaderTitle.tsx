@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import HeaderFilter from "./HeaderFilter";
+import { colors } from "../theme/colors";
 
 interface Props {
   actualFilter: string;
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 600,
         alignItems: 'center',
-        color: 'orange',
+        color: colors.txtBars,
         textAlign: 'center',
     },
     filterContainer: {

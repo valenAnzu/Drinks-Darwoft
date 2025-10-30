@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-
+import { colors } from "../theme/colors";
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -10,7 +10,7 @@ export const homeStyles = StyleSheet.create({
   screenContent: {
     flex: 1,
     paddingVertical: 10,
-    backgroundColor: '#003e47'
+    backgroundColor: colors.primary,
   },
   textName: {
       textAlign: 'left',
@@ -29,7 +29,7 @@ export const homeStyles = StyleSheet.create({
       textAlign: 'left',
       fontSize: 16,
       fontWeight: 'normal',
-      color: '#d3d3d3',
+      color: colors.txtInfo,
     },
     loadingStyle: {
       flex: 1,
@@ -52,7 +52,7 @@ export const homeStyles = StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 10,
         overflow: 'hidden',
-        backgroundColor: '#003e47',
+        backgroundColor: colors.primary,
     },
     image: {
         width: '100%',
@@ -63,12 +63,12 @@ export const homeStyles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         width: '100%',
-        backgroundColor: 'rgba(0,0,0,0.4)',
+        backgroundColor: colors.secondary,
         paddingVertical: 5,
         paddingHorizontal: 8,
     },
     imageText: {
-        color: '#fff',
+        color: colors.txtPrimary,
         fontWeight: 'bold',
         fontSize: 16,
     },

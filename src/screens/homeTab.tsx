@@ -8,6 +8,7 @@ import { FavoritesStack } from './FavoritesStack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import Ionicons from '../utils/Ionicons';
 import { View } from 'react-native';
+import { colors } from '../theme/colors';
 
 export type BottomTabParams = {
     Cocktails: NavigatorScreenParams<HomeStackParams>,
@@ -21,19 +22,19 @@ const HomeTab = () => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: '#00333b' }}
+      style={{ flex: 1, backgroundColor: colors.third }}
       edges={['left', 'right', 'bottom']}
     >
       <Tab.Navigator
         screenOptions={({ route }) => ({
             headerShown: false,
-            tabBarActiveTintColor: '#ff7b00',
+            tabBarActiveTintColor: colors.txtBars,
             tabBarInactiveTintColor: 'gray',
             tabBarStyle: {
-                backgroundColor: '#00333b',
+                backgroundColor: colors.third,
             },
             tabBarBackground: () => (
-              <View style={{ flex: 1, backgroundColor: '#00333b' }} />
+              <View style={{ flex: 1, backgroundColor: colors.third }} />
             ),
 
             tabBarIcon: ({ color, size }) => {

@@ -7,6 +7,7 @@ import { IngredientsStackParams } from "./ingredientsStack";
 import useIngredientService, { Ingredient } from "../services/useIngredientService";
 import { homeStyles } from "./homeStyles";
 import Pagination from "../components/Pagination";
+import { colors } from "../theme/colors";
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -70,8 +71,8 @@ const IngredientsScreen: React.FC = () => {
         >
             <Image 
                 source={{ uri: getIngredientImageUrl(item.strIngredient1) }}
-                style={styles.image} />
-            <Text style={styles.imageText}>{item.strIngredient1}</Text>
+                style={homeStyles.image} />
+            <Text style={homeStyles.imageText}>{item.strIngredient1}</Text>
         </Pressable>
     )
 
@@ -111,30 +112,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 10,
         overflow: 'hidden',
-        backgroundColor: '#003e47',
+        backgroundColor: colors.primary,
         elevation: 0,
         shadowOpacity: 0,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    image: {
-        width: '100%',
-        aspectRatio: 1,
-        resizeMode: 'cover',
-        backgroundColor: '#003e47'
-    },
-    overlay: {
-        position: 'absolute',
-        bottom: 0,
-        width: '100%',
-        backgroundColor: 'rgba(0,0,0,0.4)', // semitransparente para destacar el texto
-        paddingVertical: 5,
-        paddingHorizontal: 8,
-    },
-    imageText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 16,
     },
 });
 

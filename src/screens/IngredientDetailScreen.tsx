@@ -8,6 +8,7 @@ import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
 import { IngredientsStackParams } from "./ingredientsStack";
 import { BottomTabParams } from "./homeTab";
+import { colors } from "../theme/colors";
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     ingredientHeader: {
         alignItems: 'center',
         padding: 20,
-        backgroundColor: '#003e47',
+        backgroundColor: colors.primary,
         borderRadius: 12,
         margin: 10,
     },
@@ -121,13 +122,13 @@ const styles = StyleSheet.create({
     ingredientTitle: {
         fontSize: 28,
         fontWeight: 'bold',
-        color: 'white',
+        color: colors.txtPrimary,
         textAlign: 'center',
         marginBottom: 5,
     },
     ingredientDescription: {
         fontSize: 14,
-        color: '#d3d3d3',
+        color: colors.txtInfo,
         textAlign: 'center',
         marginTop: 10,
         marginBottom: 10,
@@ -136,14 +137,14 @@ const styles = StyleSheet.create({
     },
     ingredientABV: {
         fontSize: 14,
-        color: '#ff7b00',
+        color: colors.txtBars,
         textAlign: 'center',
         fontWeight: '600',
         marginBottom: 5,
     },
     ingredientSubtitle: {
         fontSize: 16,
-        color: '#d3d3d3',
+        color: colors.txtInfo,
         textAlign: 'center',
     },
     card: {
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginHorizontal: 10,
         overflow: 'hidden',
-        backgroundColor: '#003e47',
+        backgroundColor: colors.primary,
         elevation: 0,
         shadowOpacity: 0,
     },
@@ -160,10 +161,10 @@ const styles = StyleSheet.create({
         width: '100%',
         aspectRatio: 1,
         resizeMode: 'cover',
-        backgroundColor: '#003e47'
+        backgroundColor: colors.primary,
     },
     cocktailName: {
-        color: '#fff',
+        color: colors.txtPrimary,
         fontWeight: 'bold',
         fontSize: 14,
         padding: 8,
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
     emptyText: {
         textAlign: 'center',
         marginTop: 20,
-        color: 'white',
+        color: colors.txtPrimary,
         fontSize: 16,
     },
 });

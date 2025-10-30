@@ -4,6 +4,7 @@ import CocktailDetailScreen from './CocktailDetailScreen';
 import IngredientDetailScreen from './IngredientDetailScreen';
 import { Pressable } from 'react-native';
 import Ionicons from '../utils/Ionicons';
+import { colors } from '../theme/colors';
 
 export type FavoritesStackParams = {
   FavoritesList: undefined,
@@ -36,10 +37,10 @@ export const FavoritesStack = () => {
       screenOptions={{
         headerShown: true,
         headerStyle: {
-          backgroundColor: '#00333b',
+          backgroundColor: colors.third,
         },
         headerTitleStyle: {
-          color: 'white',
+          color: colors.txtBars,
           fontSize: 24,
         },
         headerTitleAlign: 'center',
