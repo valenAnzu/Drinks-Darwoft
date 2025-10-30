@@ -13,10 +13,6 @@ import { YOUR_API_INGREDIENT_IMAGE } from "../constants/apis";
 import { colors } from "../theme/colors";
 
 interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailDetail'> {
-    navigation: CompositeNavigationProp<
-        NativeStackNavigationProp<HomeStackParams, 'CocktailDetail'>,
-        NativeStackNavigationProp<BottomTabParams>
-    >;
 }
 
 const CocktailDetailScreen: React.FC<Props> = ({ navigation, route }) => {
@@ -59,7 +55,7 @@ const CocktailDetailScreen: React.FC<Props> = ({ navigation, route }) => {
     }
     
     const handleIngredientPress = (ingredientName: string) => {
-        navigation.getParent<NativeStackNavigationProp<BottomTabParams>>()?.navigate('Ingredients', {
+        navigation.getParent<NativeStackNavigationProp<BottomTabParams>>().navigate('Ingredients', {
             screen: 'IngredientDetail',
             params: {
                 ingredientName,

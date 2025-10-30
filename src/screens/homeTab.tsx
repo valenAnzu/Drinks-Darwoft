@@ -4,16 +4,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { HomeStack, HomeStackParams } from './homeStack';
 import { IngredientsStack, IngredientsStackParams } from './ingredientsStack';
-import { FavoritesStack } from './FavoritesStack';
+import { FavoritesStack, FavoritesStackParams } from './FavoritesStack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import Ionicons from '../utils/Ionicons';
 import { View } from 'react-native';
 import { colors } from '../theme/colors';
 
 export type BottomTabParams = {
-    Cocktails: NavigatorScreenParams<HomeStackParams>,
-    Ingredients: NavigatorScreenParams<IngredientsStackParams>,
-    Favorites: undefined,
+  Cocktails: NavigatorScreenParams<HomeStackParams>,
+  Ingredients: NavigatorScreenParams<IngredientsStackParams>,
+  Favorites: NavigatorScreenParams<FavoritesStackParams>,
 }
 
 const Tab = createBottomTabNavigator<BottomTabParams>();
@@ -23,7 +23,7 @@ const HomeTab = () => {
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: colors.third }}
-      edges={['left', 'right', 'bottom']}
+      edges={['left', 'right']}
     >
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -31,11 +31,15 @@ const HomeTab = () => {
             tabBarActiveTintColor: colors.txtBars,
             tabBarInactiveTintColor: 'gray',
             tabBarStyle: {
-                backgroundColor: colors.third,
+                // marginBottom: 8,
+                backgroundColor: colors.third
             },
             tabBarBackground: () => (
-              <View style={{ flex: 1, backgroundColor: colors.third }} />
+                <View style={{ flex: 1, backgroundColor: colors.third }} />
             ),
+              // <View style={{ flex: 1, backgroundColor: colors.third }} />
+              // <View style={{ backgroundColor: 'red' }} />
+            // ),
 
             tabBarIcon: ({ color, size }) => {
                 let iconName = '';

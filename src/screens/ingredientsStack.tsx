@@ -28,7 +28,7 @@ const optionsScreen = (
     title: titleScreen,
     headerLeft: () => (
       <Pressable onPress={() => screenProps.navigation.goBack()}>
-        <Ionicons name="arrow-back" size={24} color="colors.txtBars" />
+        <Ionicons name="arrow-back" size={24} color={colors.txtBars} />
       </Pressable>
     ),
   };
@@ -37,7 +37,7 @@ const optionsScreen = (
       ...options,
       headerRight: () => (
         <Pressable onPress={() => screenProps.navigation.navigate(destination as any)}>
-          <Ionicons name="menu" size={24} color="colors.txtBars" />
+          <Ionicons name="menu" size={24} color={colors.txtBars} />
         </Pressable>
       ),
     };
@@ -54,13 +54,14 @@ export const IngredientsStack = () => {
         initialRouteName={'IngredientsList'}
         screenOptions={{
           headerShown: true,
+          headerTintColor: colors.txtBars,
           headerStyle: {
             backgroundColor: colors.third,
           },
-          headerTitleStyle: {
-            color: colors.txtBars,
-            fontSize: 24,
-          },
+          // headerTitleStyle: {
+          //   color: colors.txtBars,
+          //   fontSize: 24,
+          // },
           headerTitleAlign: 'center',
           animation: 'slide_from_right',
           headerBackTitle: 'Back',

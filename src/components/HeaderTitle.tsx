@@ -12,7 +12,7 @@ const HeaderTitle: React.FC<Props> = ({ actualFilter, onFilterChange }) => {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.title}>Cocktail List</Text>
+        <Text style={styles.title}>Cocktails List</Text>
         <View style={styles.filterContainer}>
             <HeaderFilter
                 actualValue={actualFilter}

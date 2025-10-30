@@ -4,8 +4,9 @@ import { useFavorites } from "../contexts/FavoritesContext";
 import { Cocktail } from "../services/Cocktail";
 import Ionicons from "../utils/Ionicons";
 import { homeStyles } from "./homeStyles";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FavoritesStackParams } from "./FavoritesStack";
+import { BottomTabParams } from "./homeTab";
 
 interface Props extends NativeStackScreenProps<FavoritesStackParams, 'FavoritesList'>{ };
 
@@ -18,7 +19,10 @@ const FavoritesScreen: React.FC<Props> = ({ navigation }) => {
       <View style={homeStyles.cardContainer}>
       <Pressable
         style={homeStyles.card}
-        onPress={() => navigation.navigate('CocktailDetail', { cocktailId: item.idDrink, fromFavorites: true })}
+        onPress={() => {
+          const parentNav = navigation.getParent<NativeStackNavigationProp<BottomTabParams>>();
+          parentNav.navigate('Cocktails', { screen: 'CocktailDetail', params: { cocktailId: item.idDrink, fromFavorites: true } });
+        }}
       >
         <Image source={{ uri: item.strDrinkThumb }} style={homeStyles.image} />
         <View style={homeStyles.overlay}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Image, Pressable, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, Image, Pressable, Dimensions, ActivityIndicator } from 'react-native';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
+import { useIsFocused } from '@react-navigation/native';
 import { HomeStackParams } from "./homeStack";
 import useCocktailService from "../services/useCocktailService";
 import { useFavorites } from "../contexts/FavoritesContext";
@@ -15,6 +15,7 @@ interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailsList'>
 const screenWidth = Dimensions.get('window').width;
 
 const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
+    const isFocused = useIsFocused();
     const { getCocktails, isLoading } = useCocktailService();
     const { toggleFavorite, isFavorite } = useFavorites();
     const [cocktails, setCocktails] = useState<Cocktail[]>([]);
@@ -41,7 +42,7 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
         }
     }, [actualFilter, cocktails]);
 
-    React.useLayoutEffect(() => {
+    const refreshHeader = () => {
         navigation.setOptions({
             // Se reemplaza el título por un componente de filtro
             headerTitle: () => (
@@ -52,7 +53,16 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
             ),
             headerTitleAlign: 'center',
         });
-    }, [navigation, actualFilter]);
+    }
+
+    useEffect(() => {
+        if (isFocused) {
+           refreshHeader()
+        }
+
+    }, [isFocused])
+
+    
 
     if (isLoading) {
         return (

@@ -9,7 +9,7 @@ import { colors } from '../theme/colors';
 
 export type HomeStackParams = {
   CocktailsList: undefined,
-  CocktailDetail: { cocktailId: string },
+  CocktailDetail: { cocktailId: string, fromFavorites?: boolean },
 }
 
 export type HomeStackNavigationProp = CompositeNavigationProp<
@@ -29,7 +29,7 @@ const optionsScreen = (
     title: titleScreen,
     headerLeft: () => (
       <Pressable onPress={() => screenProps.navigation.goBack()}>
-        <Ionicons name="arrow-back" size={24} color="colors.txtBars" />
+        <Ionicons name="arrow-back" size={24} color={colors.txtBars} />
       </Pressable>
     ),
   };
@@ -38,7 +38,7 @@ const optionsScreen = (
       ...options,
       headerRight: () => (
         <Pressable onPress={() => screenProps.navigation.navigate(destination as any)}>
-          <Ionicons name="menu" size={24} color="colors.txtBars" />
+          <Ionicons name="menu" size={24} color={colors.txtBars} />
         </Pressable>
       ),
     };
