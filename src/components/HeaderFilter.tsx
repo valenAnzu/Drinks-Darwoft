@@ -25,7 +25,7 @@ const HeaderFilter: React.FC<Props> = ({ actualValue, onFilterChange }) => {
     <>
       <View style={styles.iconContainer}>
         <Pressable onPress={handleVisibleIcon}>
-          <Ionicons name={showIcon} size={28} color="black" />
+          <Ionicons name={showIcon} size={28} color="orange" />
         </Pressable>
       </View>
 

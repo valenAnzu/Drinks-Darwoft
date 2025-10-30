@@ -7,9 +7,8 @@ import useCocktailService from "../services/useCocktailService";
 import { useFavorites } from "../contexts/FavoritesContext";
 import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
-import Pagination from "../components/Pagination";
 import Ionicons from "../utils/Ionicons";
-//import HeaderFilter from "../components/HeaderFilter";
+import HeaderTitle from "../components/HeaderTitle";
 
 interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailsList'>{ };
 
@@ -19,8 +18,8 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
     const { getCocktails, isLoading } = useCocktailService();
     const { toggleFavorite, isFavorite } = useFavorites();
     const [cocktails, setCocktails] = useState<Cocktail[]>([]);
-    const [ currentPage, setCurrentPage ] = useState(1);
-    const [ itemsPerPage ] = useState(20);
+    const [ actualFilter, setActualFilter ] = useState("");
+    const [ filteredCocktails, setFilteredcocktails ] = useState<Cocktail[]>([]);
 
     const getAllCocktails = async () => {
         const fetchedCocktails = await getCocktails();
@@ -31,6 +30,30 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
         getAllCocktails();
     }, [])
 
+    useEffect(() => {
+        if (actualFilter.trim() === "") {
+            setFilteredcocktails(cocktails);
+        } else {
+            const filtered = cocktails.filter((cocktail) =>
+                cocktail.strDrink.toLowerCase().includes(actualFilter.toLowerCase())
+            );
+            setFilteredcocktails(filtered);
+        }
+    }, [actualFilter, cocktails]);
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            // Se reemplaza el título por un componente de filtro
+            headerTitle: () => (
+                <HeaderTitle
+                    actualFilter={actualFilter}
+                    onFilterChange={setActualFilter}
+                />
+            ),
+            headerTitleAlign: 'center',
+        });
+    }, [navigation, actualFilter]);
+
     if (isLoading) {
         return (
             <View style={homeStyles.loadingStyle}>
@@ -38,19 +61,6 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
             </View>
         );
     }
-
-    const totalPages = Math.ceil(cocktails.length / itemsPerPage);
-
-    const paginatedCocktails = cocktails.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    );
-
-    const handlePageChange = (page: number) => {
-        if (page >= 1 && page <= totalPages) {
-        setCurrentPage(page);
-        }
-    };
 
     const renderItem = ({ item }: { item: Cocktail }) => {
         const fav = isFavorite(item.idDrink);
@@ -95,7 +105,7 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
         <View style={homeStyles.screenContent}>
             <FlatList
                 numColumns={2}
-                data={paginatedCocktails}
+                data={filteredCocktails}
                 keyExtractor={(item) => item.idDrink}
                 ItemSeparatorComponent={() => (
                     <View style={{ height: 10 }} /> // separador vertical de 10px
@@ -106,12 +116,6 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
                         No se encontraron tragos que coincidan.
                     </Text>
                 )}
-            />
-            {/* Paginación */}
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
             />
         </View>                     
     )

@@ -32,10 +32,19 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: 600,
+        alignItems: 'center',
+        color: 'orange',
+        textAlign: 'center',
     },
     filterContainer: {
         flex: 1,
         marginLeft: 10,
+        position: 'relative',
+        right: 0,
+        top: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        paddingRight: 4,
     },
 });
 
