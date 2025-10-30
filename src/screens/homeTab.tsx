@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { HomeStack, HomeStackParams } from './homeStack';
 import { IngredientsStack, IngredientsStackParams } from './ingredientsStack';
-import FavoritesScreen from './FavoritesScreen';
+import { FavoritesStack } from './FavoritesStack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import Ionicons from '../utils/Ionicons';
 import { View } from 'react-native';
@@ -67,7 +67,7 @@ const HomeTab = () => {
         />
         <Tab.Screen
             name="Favorites"
-            component={FavoritesScreen}
+            component={FavoritesStack}
             options={{ title: 'Favorites' }}
         />
       </Tab.Navigator>

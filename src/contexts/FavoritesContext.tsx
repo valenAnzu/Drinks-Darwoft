@@ -4,9 +4,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Cocktail } from "../services/Cocktail";
 
 interface FavoritesContextType {
+  //valores y funciones disponibles para cualquier componente que use el contexto
   favorites: Cocktail[];
-  toggleFavorite: (cocktail: Cocktail) => void;
-  isFavorite: (idDrink: string) => boolean;
+  toggleFavorite: (cocktail: Cocktail) => void; //agrega o quita coctel de fav
+  isFavorite: (idDrink: string) => boolean; 
 }
 
 const FavoritesContext = createContext<FavoritesContextType>({
@@ -15,14 +16,15 @@ const FavoritesContext = createContext<FavoritesContextType>({
   isFavorite: () => false,
 });
 
+//envuelve a la app y provee acceso al contexto
 export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [favorites, setFavorites] = useState<Cocktail[]>([]);
 
-  // cargar desde almacenamiento local
+  // cargar desde almacenamiento local los favoritos guardados
   useEffect(() => {
     const loadFavorites = async () => {
       const stored = await AsyncStorage.getItem("favorites");
-      if (stored) setFavorites(JSON.parse(stored));
+      if (stored) setFavorites(JSON.parse(stored)); //si hay algo guardado, lo convierte de json a objeto y lo pone en el estado favorites
     };
     loadFavorites();
   }, []);
@@ -51,4 +53,4 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   );
 };
 
-export const useFavorites = () => useContext(FavoritesContext);
+export const useFavorites = () => useContext(FavoritesContext); //hook que permite utilizar el contexto

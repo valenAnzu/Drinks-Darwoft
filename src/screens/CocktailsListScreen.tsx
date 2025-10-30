@@ -56,20 +56,20 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
         const fav = isFavorite(item.idDrink);
 
         return (
-            <View style={styles.cardContainer}>
+            <View style={homeStyles.cardContainer}>
             <Pressable
                 style={styles.card}
                 onPress={() => navigation.navigate('CocktailDetail', { cocktailId: item.idDrink })}
             >
                 <Image source={{ uri: item.strDrinkThumb }} style={styles.image} />
                 <View style={styles.overlay}>
-                <Text style={styles.imageText}>{item.strDrink}</Text>
+                    <Text style={styles.imageText}>{item.strDrink}</Text>
                 </View>
             </Pressable>
 
             {/* Botón de favorito */}
             <Pressable
-                style={styles.favoriteButton}
+                style={homeStyles.favoriteButton}
                 onPress={() => toggleFavorite(item)}
                 
             >
@@ -121,9 +121,6 @@ const CARD_MARGIN = 10;
 const CARD_WIDTH = (screenWidth / 2) - CARD_MARGIN * 3;
 
 const styles = StyleSheet.create({
-    cardContainer: {
-        position: "relative",
-    },
     card: {
         width: CARD_WIDTH,
         borderRadius: 10,
@@ -149,13 +146,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 16,
-    },
-    favoriteButton: {
-        position: "absolute",
-        top: 8,
-        right: 15,
-        padding: 6,
-        borderRadius: 20,
     },
 });
 
