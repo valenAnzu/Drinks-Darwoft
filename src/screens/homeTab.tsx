@@ -31,28 +31,24 @@ const HomeTab = () => {
             tabBarActiveTintColor: colors.txtBars,
             tabBarInactiveTintColor: 'gray',
             tabBarStyle: {
-                // marginBottom: 8,
                 backgroundColor: colors.third
             },
             tabBarBackground: () => (
                 <View style={{ flex: 1, backgroundColor: colors.third }} />
             ),
-              // <View style={{ flex: 1, backgroundColor: colors.third }} />
-              // <View style={{ backgroundColor: 'red' }} />
-            // ),
 
             tabBarIcon: ({ color, size }) => {
                 let iconName = '';
 
                 switch (route.name) {
                     case 'Cocktails':
-                        iconName = 'list-outline'; // icono de copa/botella
+                        iconName = 'wine-outline';
                         break;
                     case 'Ingredients':
-                        iconName = 'wine-outline'; // icono de lista de tres líneas
+                        iconName = 'list-outline';
                         break;
                     case 'Favorites':
-                        iconName = 'heart-outline'; // icono de corazón
+                        iconName = 'heart-outline';
                         break;
                 }
 

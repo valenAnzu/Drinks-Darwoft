@@ -9,6 +9,7 @@ import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
 import Ionicons from "../utils/Ionicons";
 import HeaderTitle from "../components/HeaderTitle";
+import { colors } from "../theme/colors";
 
 interface Props extends NativeStackScreenProps<HomeStackParams, 'CocktailsList'>{ };
 
@@ -62,12 +63,10 @@ const CocktailsListScreen: React.FC<Props> = ({ navigation }) => {
 
     }, [isFocused])
 
-    
-
     if (isLoading) {
         return (
             <View style={homeStyles.loadingStyle}>
-                <ActivityIndicator size="large" color="#0000ff"/>
+                <ActivityIndicator size="large" color={colors.primary}/>
             </View>
         );
     }

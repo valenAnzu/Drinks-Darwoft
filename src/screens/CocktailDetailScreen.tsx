@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps, NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { CompositeNavigationProp } from '@react-navigation/native';
 
 import { HomeStackParams } from "./homeStack";
 import { BottomTabParams } from "./homeTab";

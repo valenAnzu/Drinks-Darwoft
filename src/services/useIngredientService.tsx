@@ -34,8 +34,6 @@ const useIngredientService = () => {
     setErrorMessage('');
 
     try {
-      // The API doesn't have a direct endpoint to get ingredient details
-      // We'll return the ingredient name as the ingredient info
       return { strIngredient1 } as Ingredient;
     } catch (error) {
       console.error('Error fetching ingredient:', error);

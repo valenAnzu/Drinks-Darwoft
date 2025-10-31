@@ -32,7 +32,7 @@ const IngredientsScreen: React.FC = () => {
     if (isLoading) {
         return (
             <View style={homeStyles.loadingStyle}>
-                <ActivityIndicator size="large" color="#0000ff"/>
+                <ActivityIndicator size="large" color={colors.primary}/>
             </View>
         );
     }

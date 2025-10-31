@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, ActivityIndicator, ScrollView, StyleSheet, FlatList, Pressable, Dimensions } from 'react-native';
+import { View, Text, Image, ActivityIndicator, ScrollView, StyleSheet, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 
-import useIngredientService, { Ingredient } from "../services/useIngredientService";
+import useIngredientService from "../services/useIngredientService";
 import useCocktailService from "../services/useCocktailService";
 import { Cocktail } from "../services/Cocktail";
 import { homeStyles } from "./homeStyles";
@@ -44,7 +44,7 @@ const IngredientDetailScreen: React.FC<Props> = ({ navigation, route }) => {
     if (isLoading) {
         return (
             <View style={homeStyles.loadingStyle}>
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color={colors.primary} />
             </View>
         );
     }
@@ -61,14 +61,23 @@ const IngredientDetailScreen: React.FC<Props> = ({ navigation, route }) => {
     const getIngredientImageUrl = (ingredientName: string, size: IngredientImageSize = IngredientSize.Medium) =>
         `https://www.thecocktaildb.com/images/ingredients/${encodeURIComponent(ingredientName)}-${size}.png`;
 
+    const handleDrinkPress = (cocktailId: string) => {
+        navigation.getParent<NativeStackNavigationProp<BottomTabParams>>().navigate('Cocktails', {
+                screen: 'CocktailDetail',
+                params: {
+                    cocktailId,
+                },
+            });
+    };
+
     const renderItem = ({ item }: { item: Cocktail }) => (
-        <View style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={() => handleDrinkPress(item.idDrink)}>
             <Image 
                 source={{ uri: item.strDrinkThumb }} 
                 style={styles.image} 
             />
             <Text style={styles.cocktailName}>{item.strDrink}</Text>
-        </View>
+        </TouchableOpacity>
     );
 
     return (

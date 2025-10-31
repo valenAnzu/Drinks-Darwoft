@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Pressable} from "react-native";
 import Ionicons from "../utils/Ionicons";
 import ModalView from "./ModalView";
+import { colors } from "../theme/colors";
 
 interface Props {
   actualValue: string;
@@ -25,7 +26,7 @@ const HeaderFilter: React.FC<Props> = ({ actualValue, onFilterChange }) => {
     <>
       <View style={styles.iconContainer}>
         <Pressable onPress={handleVisibleIcon}>
-          <Ionicons name={showIcon} size={28} color="orange" />
+          <Ionicons name={showIcon} size={28} color={colors.txtBars} />
         </Pressable>
       </View>
 

@@ -1,10 +1,9 @@
-import { createNativeStackNavigator,  NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import IngredientsScreen from './IngredientsScreen';
 import IngredientDetailScreen from './IngredientDetailScreen';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable } from 'react-native';
 import Ionicons from '../utils/Ionicons';
-import { HeaderTitle } from '@react-navigation/elements';
 import { colors } from '../theme/colors';
 
 export type IngredientsStackParams = {
@@ -58,10 +57,6 @@ export const IngredientsStack = () => {
           headerStyle: {
             backgroundColor: colors.third,
           },
-          // headerTitleStyle: {
-          //   color: colors.txtBars,
-          //   fontSize: 24,
-          // },
           headerTitleAlign: 'center',
           animation: 'slide_from_right',
           headerBackTitle: 'Back',
